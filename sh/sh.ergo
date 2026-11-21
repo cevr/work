@@ -3,7 +3,7 @@
 // process's own.
 
 import exec
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 
 // Hooks runs the commands through a Runner.
 type Hooks { run exec.Runner } implements work.Hooks

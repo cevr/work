@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 // work's TypeScript plugin (SEMWS WG4): reads work's requests on standard
 // input, one JSON object a line, and writes one answer a line, in order
-// (modules/work/work/plugin.ergo). Level 1: it answers UnitsOf; every
+// (work/plugin.ergo). Level 1: it answers UnitsOf; every
 // other request is NotProvided, never an empty answer.
 
 import { readFileSync } from "node:fs";

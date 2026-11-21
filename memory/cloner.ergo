@@ -6,7 +6,7 @@
 // before its first colon ("vol:/base"; a root with no colon is on the
 // volume ""), and a clone across volumes is NotSameVolume.
 
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 import maps
 import slices
 import strings

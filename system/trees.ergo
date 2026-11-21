@@ -6,7 +6,7 @@
 
 import exec
 import filepath
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 import strconv
 import strings
 

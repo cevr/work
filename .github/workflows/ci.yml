@@ -1,0 +1,167 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      ERGO_CACHE: ${{ github.workspace }}/../ergo-cache
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Which ergo (the ergo line of ergo.mod)
+        id: ergo
+        run: |
+          v=$(awk '$1 == "ergo" { print $2 }' ergo.mod)
+          [ -n "$v" ] || { echo "ergo.mod has no ergo line"; exit 1; }
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "commit=${v##*-}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27.4"
+          cache: false
+
+      - name: Cache ergo and its build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/go/bin/ergo
+            ${{ github.workspace }}/../ergo-cache
+          key: ergo-${{ runner.os }}-${{ steps.ergo.outputs.version }}
+
+      - name: Install ergo at that version
+        env:
+          COMMIT: ${{ steps.ergo.outputs.commit }}
+        run: |
+          if [ ! -x "$HOME/go/bin/ergo" ]; then
+            git clone --quiet --filter=blob:none https://github.com/cevr/ergo.git "$RUNNER_TEMP/ergo"
+            git -C "$RUNNER_TEMP/ergo" checkout --quiet "$COMMIT"
+            (cd "$RUNNER_TEMP/ergo" && go build -o "$HOME/go/bin/ergo" ./cmd/ergo)
+          fi
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+
+      - name: Unprivileged user namespaces (the exec test host)
+        if: runner.os == 'Linux'
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+
+      - name: Git identity for the cases and laws that commit
+        run: |
+          git config --global user.name ci
+          git config --global user.email ci@example.invalid
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Format
+        run: ergo fmt --check .
+
+      - name: Check
+        run: ergo check ./...
+
+      - name: Tests and laws (every package but the folders of full-tier)
+        run: |
+          full=$(grep -v '^#' full-tier | awk 'NF { print $1 }')
+          pkgs=$(git ls-files '*.ergo' | grep -v -E '/(testdata|cases)/' | xargs -n1 dirname | sort -u)
+          [ -n "$pkgs" ] || { echo "no package"; exit 1; }
+          : > "$RUNNER_TEMP/test.log"
+          for d in $pkgs; do
+            case " $(echo $full) " in *" $d "*) continue ;; esac
+            ergo test "./$d" 2>&1 | tee -a "$RUNNER_TEMP/test.log"
+          done
+          if grep -q -i 'no tests to run' "$RUNNER_TEMP/test.log"; then echo "a package ran no test"; exit 1; fi
+          grep '^skip law' "$RUNNER_TEMP/test.log" | sort > "$RUNNER_TEMP/skips" || true
+          grep '^skip law' expected-skips | sort > "$RUNNER_TEMP/expected-skips"
+          diff "$RUNNER_TEMP/expected-skips" "$RUNNER_TEMP/skips"
+
+      - name: Language seam (work/ imports std and this module only)
+        run: |
+          files=$(git ls-files 'work/*.ergo' | grep -v '/testdata/')
+          [ -n "$files" ] || { echo "no file under work/"; exit 1; }
+          bad=$(echo "$files" | xargs grep -h -E '^import ' | awk '{ print $NF }' | grep -v '^github.com/cevr/work/' | grep -E '\.|^code$' || true)
+          [ -z "$bad" ] || { echo "work/ imports outside std and this module: $bad"; exit 1; }
+
+      - name: Build
+        run: |
+          mkdir -p out
+          ergo build ./cmd/work -o out/work
+
+      - name: Cases
+        run: ergo test ./cmd/work --cases cmd/work/cases
+
+      - name: TypeScript plugin
+        run: |
+          cd plugins/typescript
+          bun install --frozen-lockfile
+          bun test
+
+      - name: npm packages
+        if: runner.os == 'Linux'
+        run: |
+          sh npm/pack.sh work --pack "$PWD/out/npm"
+          sh npm/check.sh work "$RUNNER_TEMP/npm-check"
+
+      - uses: actions/upload-artifact@v4
+        if: runner.os == 'Linux'
+        with:
+          name: npm-tarballs
+          path: out/npm/*.tgz
+          if-no-files-found: error
+
+  full-tier:
+    runs-on: ubuntu-latest
+    env:
+      ERGO_CACHE: ${{ github.workspace }}/../ergo-cache
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Which ergo (the ergo line of ergo.mod)
+        id: ergo
+        run: |
+          v=$(awk '$1 == "ergo" { print $2 }' ergo.mod)
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "commit=${v##*-}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27.4"
+          cache: false
+
+      - name: Cache ergo and its build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/go/bin/ergo
+            ${{ github.workspace }}/../ergo-cache
+          key: ergo-${{ runner.os }}-${{ steps.ergo.outputs.version }}
+
+      - name: Install ergo at that version
+        env:
+          COMMIT: ${{ steps.ergo.outputs.commit }}
+        run: |
+          if [ ! -x "$HOME/go/bin/ergo" ]; then
+            git clone --quiet --filter=blob:none https://github.com/cevr/ergo.git "$RUNNER_TEMP/ergo"
+            git -C "$RUNNER_TEMP/ergo" checkout --quiet "$COMMIT"
+            (cd "$RUNNER_TEMP/ergo" && go build -o "$HOME/go/bin/ergo" ./cmd/ergo)
+          fi
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+
+      - name: Unprivileged user namespaces (the exec test host)
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+
+      - name: Git identity
+        run: |
+          git config --global user.name ci
+          git config --global user.email ci@example.invalid
+
+      - name: The folders of full-tier
+        run: |
+          dirs=$(grep -v '^#' full-tier | awk 'NF { print $1 }')
+          [ -n "$dirs" ] || { echo "full-tier names no folder"; exit 1; }
+          for d in $dirs; do ergo test "./$d"; done

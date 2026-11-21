@@ -10,7 +10,7 @@ import exec
 import maps
 import os
 import slices
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 
 let onShell = context needs TestAmbient {
 	work.Vcs:    New(exec.NewTestHost()),

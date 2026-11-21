@@ -2,14 +2,14 @@
 // case's own (TestAmbient). This package is in the module's full-tier
 // file: every case of every law starts git three times to make its
 // checkout, and the package's test takes about 19 s and 5.4 G
-// instructions (WG2 r1, load 35), so only the gate's full tier runs it
-// (`go run ./scripts/examples -full-tier`). The fast tier keeps git's own
+// instructions (WG2 r1, load 35), so only CI's full-tier job runs it
+// (the folders of the file full-tier). The fast tier keeps git's own
 // package: the laws in an empty folder (onShell), the tests that hold each
 // law's fact on a repository they make, and the model's laws in memory.
 
 import exec
-import github.com/cevr/ergo/modules/work/git
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/git
+import github.com/cevr/work/work
 
 let onHost = context needs TestAmbient { work.Vcs: Checkout(exec.NewTestHost()) }
 

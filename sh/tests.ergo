@@ -2,6 +2,6 @@
 // (TestAmbient): each hook runs sh for real, in the folder.
 
 import exec
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 
 let onHost = context needs TestAmbient { work.Hooks: NewHooks(exec.NewTestHost()) }

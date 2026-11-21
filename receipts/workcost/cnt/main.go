@@ -5,7 +5,7 @@
 // (perf_event_open with inherit, started at the exec), its user and
 // system CPU time and peak resident set (rusage), and its wall time,
 // labelled as loaded (the host is shared; the wall time is not a claim).
-// scripts/workcost runs each step of the receipt through it.
+// receipts/workcost runs each step of the receipt through it.
 //
 //	usage: cnt [-l LABEL] -- CMD ARGS...
 package main

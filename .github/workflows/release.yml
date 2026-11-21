@@ -1,0 +1,68 @@
+name: release
+
+# On a tag vX.Y.Z only: build, pack and check the four npm packages, then
+# publish them. Publishing needs the secret NPM_TOKEN, which only the owner
+# sets; without it the job stops before publish.
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      ERGO_CACHE: ${{ github.workspace }}/../ergo-cache
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Which ergo (the ergo line of ergo.mod)
+        id: ergo
+        run: |
+          v=$(awk '$1 == "ergo" { print $2 }' ergo.mod)
+          [ -n "$v" ] || { echo "ergo.mod has no ergo line"; exit 1; }
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "commit=${v##*-}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27.4"
+          cache: false
+
+      - name: Install ergo at that version
+        env:
+          COMMIT: ${{ steps.ergo.outputs.commit }}
+        run: |
+          git clone --quiet --filter=blob:none https://github.com/cevr/ergo.git "$RUNNER_TEMP/ergo"
+          git -C "$RUNNER_TEMP/ergo" checkout --quiet "$COMMIT"
+          (cd "$RUNNER_TEMP/ergo" && go build -o "$HOME/go/bin/ergo" ./cmd/ergo)
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+
+      - uses: oven-sh/setup-bun@v2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: The tag is the packages' version
+        run: |
+          tag=${GITHUB_REF_NAME#v}
+          for p in npm/work*/package.json; do
+            v=$(node -p "require('./$p').version")
+            [ "$v" = "$tag" ] || { echo "$p is $v, the tag is $tag"; exit 1; }
+          done
+
+      - name: Pack and check
+        run: |
+          mkdir -p out
+          ergo build ./cmd/work -o out/work
+          sh npm/pack.sh work --pack "$PWD/out/npm"
+          sh npm/check.sh work "$RUNNER_TEMP/npm-check"
+
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          [ -n "$NODE_AUTH_TOKEN" ] || { echo "NPM_TOKEN is not set; nothing is published"; exit 1; }
+          sh npm/pack.sh work --publish

@@ -1,24 +1,22 @@
 #!/bin/sh
-# npm.sh NAME [--pack DIR | --publish]: build and pack the binary package
-# NAME of tools/npm (its line in tools/npm/packages): the static binary of
-# PROGRAM/cmd/NAME for each platform package (CGO_ENABLED=0), the shared
+# pack.sh NAME [--pack DIR | --publish]: build and pack the binary package
+# NAME of npm/ (a folder npm/NAME with its platform folders): the static binary of
+# cmd/NAME for each platform package (CGO_ENABLED=0), the shared
 # launcher into a wrapper that takes it, then each package's tarball. With
 # no flag it publishes nothing: `npm pack --dry-run` lists each tarball's
 # files and sizes. --pack DIR writes the tarballs into DIR. --publish runs
 # npm publish (the owner's step).
 # ERGO is the ergo binary (default: ergo on PATH).
 set -eu
-name=${1:?usage: npm.sh NAME [--pack DIR | --publish]}
+name=${1:?usage: pack.sh NAME [--pack DIR | --publish]}
 mode=${2:-}
 packdir=${3:-}
-[ "$mode" != --pack ] || [ -n "$packdir" ] || { echo "npm.sh: --pack needs a folder" >&2; exit 2; }
+[ "$mode" != --pack ] || [ -n "$packdir" ] || { echo "pack.sh: --pack needs a folder" >&2; exit 2; }
 root=$(cd "$(dirname "$0")/.." && pwd)
 ergo=${ERGO:-ergo}
-npm=$root/tools/npm
-line=$(grep -v '^#' "$npm/packages" | awk -v n="$name" '$1 == n')
-[ -n "$line" ] || { echo "npm.sh: no package $name in tools/npm/packages" >&2; exit 2; }
-set -- $line
-program=$2 launcher=$3
+npm=$root/npm
+[ -d "$npm/$name" ] && [ -f "$root/cmd/$name/main.ergo" ] || { echo "pack.sh: no package $name (npm/$name and cmd/$name)" >&2; exit 2; }
+program=. launcher=shared
 for plat in linux/amd64:linux-x64 linux/arm64:linux-arm64 darwin/arm64:darwin-arm64; do
 	target=${plat%%:*}
 	dir=$npm/$name-${plat#*:}

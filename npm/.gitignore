@@ -1,0 +1,6 @@
+# The platform packages' binaries are built at pack (npm/pack.sh).
+work-*/bin/
+# The wrapper takes the shared launcher at pack.
+work/bin/
+work/install.js
+*.tgz

@@ -2,8 +2,8 @@
 // prints them: the text is what a person reads, so each is a row.
 
 import fs
-import github.com/cevr/ergo/modules/work/work
-import github.com/cevr/ergo/modules/work/work/workcli
+import github.com/cevr/work/work
+import github.com/cevr/work/work/workcli
 
 // CopyRefusedSaysTheBytes: where no Cloner shares blocks, new without
 // -copy refuses, names the bytes a copy would take and why each Cloner

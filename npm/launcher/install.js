@@ -1,4 +1,4 @@
-// postinstall of a wrapper package of tools/npm (scripts/npm.sh copies it
+// postinstall of a wrapper package of npm/ (npm/pack.sh copies it
 // beside the wrapper's package.json): put the platform package's native
 // binary at bin/NAME, in place of the shell launcher, so the bin npm links
 // runs the binary itself (esbuild's pattern). NAME is the package's one

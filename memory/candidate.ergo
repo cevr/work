@@ -5,10 +5,10 @@
 import exec
 import fs
 import fstest
-import github.com/cevr/ergo/modules/work/classes
+import github.com/cevr/work/classes
 import strings
 import sync
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 
 // Driver is an exec.Runner that plays a candidate line's tool and check
 // on a disk: `drv --version` prints "drv VERSION" (status 127 with no

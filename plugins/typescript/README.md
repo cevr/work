@@ -1,6 +1,6 @@
 # plugins/typescript
 
-work's TypeScript language plugin, level 1 (SEMWS WG4): a `Splitter` by [oxc-parser](https://oxc.rs/docs/guide/usage/parser) that speaks work's plugin protocol (`modules/work/work/plugin.ergo`). It is the one folder of SEMWS that is not Ergo: it has its own test command and is not in the Go gate.
+work's TypeScript language plugin, level 1 (SEMWS WG4): a `Splitter` by [oxc-parser](https://oxc.rs/docs/guide/usage/parser) that speaks work's plugin protocol (`work/plugin.ergo`). It is the one folder of SEMWS that is not Ergo: it has its own test command and is not in the Go gate.
 
 ```toml
 # work.toml

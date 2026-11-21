@@ -7,7 +7,7 @@
 // (models/registry) on what is left; it is the law of every other rule
 // of the protocol (a refused parent, a refused id, a stopped writer).
 
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 import slices
 import sync
 import strings

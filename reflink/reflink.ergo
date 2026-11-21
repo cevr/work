@@ -7,8 +7,8 @@
 // Go control: Rift's per-file FICLONE walk.
 
 import exec
-import github.com/cevr/ergo/modules/work/system
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/system
+import github.com/cevr/work/work
 
 // Cloner reflinks each file through GNU cp.
 type Cloner { trees system.Trees } implements work.Cloner

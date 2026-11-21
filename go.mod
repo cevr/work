@@ -1,4 +1,4 @@
-module github.com/cevr/ergo/modules/work
+module github.com/cevr/work
 
 go 1.27
 

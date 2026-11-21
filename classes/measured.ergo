@@ -3,7 +3,7 @@ import strconv
 import strings
 
 // MergeMeasured merges two JSON objects of measured numbers (an object
-// whose values are numbers or such objects, as scripts/gate writes its
+// whose values are numbers or such objects, as a test gate writes its
 // durations): key by key, a number only one side changed takes that side;
 // two sides that measured apart keep ours (the lander's), and the file is
 // marked to be measured again, since a measurement has no merge; a key

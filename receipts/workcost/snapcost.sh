@@ -1,6 +1,6 @@
 #!/bin/sh
 # snapcost.sh REPO TAG MODE: one snapshot of REPO's working files by the
-# git commands of modules/work/git's Snapshot, into the index
+# git commands of package git's Snapshot, into the index
 # .git/snapcost-TAG (never the repository's own index), and the tree it
 # writes. MODE plain starts as Snapshot did before SEMWS WG4b (read-tree
 # HEAD: every file hashed), m as it does now (read-tree -m HEAD: a file

@@ -5,7 +5,7 @@ import exec
 import fs
 import fstest
 import hex
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 import sha256
 import time
 

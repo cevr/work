@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 // same.js A B: exit 0 when the two TypeScript files hold the same units
 // (each unit's text, in any order), 1 when they do not, 2 when one does
-// not parse. scripts/mergereplay uses it to tell a merge that is the
+// not parse. ergo's scripts/mergereplay uses it to tell a merge that is the
 // committed file in another order of its declarations from one that is
 // not.
 

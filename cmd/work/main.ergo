@@ -1,5 +1,5 @@
-// work: copy-on-write workspaces of any Git repository (module work,
-// modules/work). `ergo work ARGS` runs it from PATH; it needs no Ergo
+// work: copy-on-write workspaces of any Git repository (module
+// github.com/cevr/work). `ergo work ARGS` runs it from PATH; it needs no Ergo
 // module. Its commands are the generated command line of work.Api
 // (work/workcli): init, new, adopt, adopt-rift, list, rm, gc, du,
 // plugin-test, ready, sync, env, merge-file, merge-folders, derive, deps,
@@ -29,15 +29,15 @@ import api
 import exec
 import filepath
 import fs
-import github.com/cevr/ergo/modules/work/btrfs
-import github.com/cevr/ergo/modules/work/clonefile
-import github.com/cevr/ergo/modules/work/copy
-import github.com/cevr/ergo/modules/work/git
-import github.com/cevr/ergo/modules/work/journal
-import github.com/cevr/ergo/modules/work/reflink
-import github.com/cevr/ergo/modules/work/sh
-import github.com/cevr/ergo/modules/work/work
-import github.com/cevr/ergo/modules/work/work/workcli
+import github.com/cevr/work/btrfs
+import github.com/cevr/work/clonefile
+import github.com/cevr/work/copy
+import github.com/cevr/work/git
+import github.com/cevr/work/journal
+import github.com/cevr/work/reflink
+import github.com/cevr/work/sh
+import github.com/cevr/work/work
+import github.com/cevr/work/work/workcli
 import os
 import slices
 import strconv

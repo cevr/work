@@ -4,8 +4,8 @@
 
 import fs
 import fstest
-import github.com/cevr/ergo/modules/work/classes
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/classes
+import github.com/cevr/work/work
 import maps
 import slices
 import strings

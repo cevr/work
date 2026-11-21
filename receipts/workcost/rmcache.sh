@@ -11,7 +11,7 @@
 # Environment (all required but CAP):
 #   S     the workcost scratch folder (under /workspaces/.scratch/ or
 #         /tmp/opencode/)
-#   CNT   the cnt binary (go build ./scripts/workcost/cnt)
+#   CNT   the cnt binary (go build ./receipts/workcost/cnt)
 #   WORK  the work binary
 #   CAP   the most 30-second waits for a 1-minute load under 48 (20)
 set -eu

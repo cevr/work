@@ -4,8 +4,8 @@
   "description": "The work binary for Linux arm64 (a static Go binary; see @cvr/work).",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cevr/ergo.git",
-    "directory": "tools/npm/work-linux-arm64"
+    "url": "git+https://github.com/cevr/work.git",
+    "directory": "npm/work-linux-arm64"
   },
   "os": ["linux"],
   "cpu": ["arm64"],

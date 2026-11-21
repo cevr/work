@@ -4,7 +4,7 @@
 
 import fstest
 import time
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 
 // RiftRegistryOnAMac: the smallest repro of adopt-rift missing Rift's
 // registry on a Mac (G5): with the default data folder, the registry is

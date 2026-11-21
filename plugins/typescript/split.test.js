@@ -1,4 +1,4 @@
-// The Splitter's laws (modules/work/work/language.ergo) on a corpus of
+// The Splitter's laws (work/language.ergo) on a corpus of
 // TypeScript shapes and on seeded edits of it, and the rows of the
 // plan's list of what a TypeScript Splitter gets wrong. `work
 // plugin-test` runs the same laws on a whole repository; these run with

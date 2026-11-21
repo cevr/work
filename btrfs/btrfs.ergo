@@ -6,8 +6,8 @@
 // Go control: the same call Rift makes (rift create on btrfs).
 
 import exec
-import github.com/cevr/ergo/modules/work/system
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/system
+import github.com/cevr/work/work
 
 // Cloner snapshots subvolumes through the btrfs command.
 type Cloner { trees system.Trees } implements work.Cloner

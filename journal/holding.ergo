@@ -2,7 +2,7 @@ import filepath
 import fs
 import fstest
 import strings
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 
 // BaseHolding is the base whose registry holds a live workspace at the
 // folder dir, of the bases init registered (work.BasesFile in data), or

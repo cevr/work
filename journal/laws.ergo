@@ -1,5 +1,5 @@
-import github.com/cevr/ergo/modules/work/memory
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/memory
+import github.com/cevr/work/work
 import strings
 
 // TornWriteIsDropped: a line a crash cut short (any prefix of a put with

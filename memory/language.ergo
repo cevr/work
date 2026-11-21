@@ -13,7 +13,7 @@ import exec
 import filepath
 import fs
 import fstest
-import github.com/cevr/ergo/modules/work/classes
+import github.com/cevr/work/classes
 import maps
 import slices
 import strconv
@@ -21,7 +21,7 @@ import strings
 import sync
 import time
 import utf8
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 
 // Lines is the reference language. fault names one fault work
 // plugin-test must refuse ("" for none): "drops" (units lose the last

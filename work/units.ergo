@@ -12,7 +12,7 @@
 // edits of one function's lines apart still merge as Git would, and two
 // imports of one module merge as a set of specifiers.
 
-import github.com/cevr/ergo/modules/work/classes
+import github.com/cevr/work/classes
 import slices
 import strings
 

@@ -4,8 +4,8 @@
   "description": "Copy-on-write workspaces of any Git repository: a full clone (installed packages and build output included) in one call, with a name, an id, a branch and a lifecycle. Replaces Rift.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cevr/ergo.git",
-    "directory": "tools/npm/work"
+    "url": "git+https://github.com/cevr/work.git",
+    "directory": "npm/work"
   },
   "bin": {
     "work": "bin/work"

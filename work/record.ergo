@@ -8,7 +8,7 @@
 
 import filepath
 import fs
-import github.com/cevr/ergo/modules/work/classes
+import github.com/cevr/work/classes
 import hex
 import json
 import maps

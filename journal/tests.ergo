@@ -3,6 +3,6 @@
 // file in the folder.
 
 import fs
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 
 let onHost = context needs TestAmbient { work.Lock: NewLock(fs.NewTestHost(), ".", 0s) }

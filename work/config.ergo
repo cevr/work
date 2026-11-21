@@ -79,7 +79,7 @@ type BadConfig { Line int, Why string }
 let RiftFiltered = []string{"node_modules", ".pnpm-store", "target", ".venv", "venv", ".tox", ".nox", "__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache", ".next", ".nuxt", ".svelte-kit", ".turbo", ".vite", ".parcel-cache", ".cache", "dist", "build", "coverage", ".yarn/cache"}
 
 // StarterConfig is the work.toml that init writes when there is none.
-let StarterConfig = "# work.toml: the workspaces of this repository (work, ergo work).\n# Every key has a default; see modules/work/README.md.\n[work]\n# storage = \"../.work/<base>\"\n# leave_out = []          # [\"rift-filtered\"] is Rift's default list\n# env = []\n# trash = true            # false: rm and gc -idle delete for good at once\n\n# [deps]\n# lock = \"bun.lock\"\n# install = \"bun install --frozen-lockfile\"\n\n# [hooks]                  # run only after work trust\n# postcreate = []\n"
+let StarterConfig = "# work.toml: the workspaces of this repository (work, ergo work).\n# Every key has a default; see README.md.\n[work]\n# storage = \"../.work/<base>\"\n# leave_out = []          # [\"rift-filtered\"] is Rift's default list\n# env = []\n# trash = true            # false: rm and gc -idle delete for good at once\n\n# [deps]\n# lock = \"bun.lock\"\n# install = \"bun install --frozen-lockfile\"\n\n# [hooks]                  # run only after work trust\n# postcreate = []\n"
 
 // ConfigStarterReads: the starter work.toml reads as the empty
 // configuration: every key it shows is a comment, so a fresh base runs

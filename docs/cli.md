@@ -1,9 +1,9 @@
 # work
 
-The binary `work` (module `modules/work`, and `ergo work`): copy-on-write workspaces of any Git repository. `cmd/work/main.ergo` is the only place that chooses the providers: the Cloners that share blocks, in the order they are tried (a btrfs snapshot, a reflink per file, clonefile), the plain copy, the journal registry and its lock, the hooks by sh, git, and the host's files, commands and clock. The commands are the generated command line of `work.Api`; the module's README describes them.
+The binary `work` (module `github.com/cevr/work`, and `ergo work`): copy-on-write workspaces of any Git repository. `cmd/work/main.ergo` is the only place that chooses the providers: the Cloners that share blocks, in the order they are tried (a btrfs snapshot, a reflink per file, clonefile), the plain copy, the journal registry and its lock, the hooks by sh, git, and the host's files, commands and clock. The commands are the generated command line of `work.Api`; the module's README describes them.
 
 ```sh
-ergo build examples/work/cmd/work -o ~/bin/work
+ergo build ./cmd/work -o ~/bin/work
 cd /workspaces/ergo && work init
 work new wf10/ws1               # {name, id, path: /workspaces/.work/ergo/wf10-ws1, ...}
 work list

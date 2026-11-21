@@ -5,8 +5,8 @@
 // Go control: rift create on a file system without copy-on-write.
 
 import exec
-import github.com/cevr/ergo/modules/work/system
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/system
+import github.com/cevr/work/work
 
 // Cloner copies through cp -a.
 type Cloner { trees system.Trees } implements work.Cloner

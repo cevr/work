@@ -1,5 +1,5 @@
 import fs
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 import sync
 
 // Lock is the journal's locks: a kernel file lock (fs.LockFile) per key

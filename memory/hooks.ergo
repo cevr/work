@@ -4,7 +4,7 @@
 
 import exec
 import fs
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/work
 import maps
 import slices
 import strconv

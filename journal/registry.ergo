@@ -28,8 +28,8 @@
 
 import fs
 import fstest
-import github.com/cevr/ergo/modules/work/memory
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/memory
+import github.com/cevr/work/work
 import strconv
 import strings
 

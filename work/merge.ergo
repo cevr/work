@@ -3,7 +3,7 @@
 // trees into a folder.
 
 import exec
-import github.com/cevr/ergo/modules/work/classes
+import github.com/cevr/work/classes
 import filepath
 import fs
 import hex

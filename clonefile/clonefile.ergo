@@ -6,8 +6,8 @@
 // Go control: Rift's clonefile path on darwin.
 
 import exec
-import github.com/cevr/ergo/modules/work/system
-import github.com/cevr/ergo/modules/work/work
+import github.com/cevr/work/system
+import github.com/cevr/work/work
 
 // Cloner clones through cp -c.
 type Cloner { trees system.Trees } implements work.Cloner

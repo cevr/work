@@ -3,9 +3,9 @@ import slices
 import maps
 import fs
 import fstest
-import github.com/cevr/ergo/modules/work/classes
-import github.com/cevr/ergo/modules/work/work
-import github.com/cevr/ergo/modules/work/work/workapi
+import github.com/cevr/work/classes
+import github.com/cevr/work/work
+import github.com/cevr/work/work/workapi
 import time
 
 // overTool runs work.Api's laws on the Tool itself, over a fresh memory
