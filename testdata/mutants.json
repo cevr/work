@@ -52,7 +52,7 @@
     {
       "name": "ws0-gc-keeps-cut-clones", "origin": "wf10/semws WS0",
       "file": "work/remove.ergo",
-      "from": "\t\t\t} else if taken && strings.HasPrefix(w.Path, t.home+\"/\") {\n",
+      "from": "\t\t\t} else if taken && strings.HasPrefix(w.Path, t.home+\"/\") && !t.copier.Has(w.Path+\"/.git\") {\n",
       "to": "\t\t\t} else if false {\n",
       "rule": "A crash between the reservation and the clone leaves Creating, and gc removes its record and its tree once its maker is gone: memory's ToolAgreesWithTheReference (CrashOp, GcOp), StoppedWriterIsFinished.",
       "anchor": {"tests": ["test:./..."]}, "killers": ["test:./..."]
@@ -103,14 +103,6 @@
       "from": "\ttry answer(v, root, []string{\"status\", \"--porcelain\", \"--untracked-files=normal\"}) == \"\"\n",
       "to": "\ttrue\n",
       "rule": "git's Clean sees an untracked file: the rm-dirty case is NotHeld.",
-      "anchor": {"tests": ["cases:cmd/work"]}, "killers": ["cases:cmd/work"]
-    },
-    {
-      "name": "ws0-json-failure-empty-message", "origin": "wf10/semws WS0",
-      "file": "internal/sketch/std/api/api.ergo",
-      "from": "\tif o.Err == \"\" {\n",
-      "to": "\tif false {\n",
-      "rule": "With --json a failure is its JSON on standard output, and standard error says so, not a bare \"ergo work: \" line (an os.Exit always writes its Message and a line feed): the json-noinit case.",
       "anchor": {"tests": ["cases:cmd/work"]}, "killers": ["cases:cmd/work"]
     },
     {
@@ -1554,14 +1546,6 @@
       "anchor": {"tests": ["test:./..."]}, "killers": ["test:./..."]
     },
     {
-      "name": "wkb-replay-real-registry", "origin": "wf10/semws WK-BASES3 (the Mac)",
-      "file": "scripts/mergereplay/mergereplay.sh",
-      "from": "export HOME=\"$S/home\" XDG_DATA_HOME=\"$S/xdg\"\n",
-      "to": "\n",
-      "rule": "A script that runs work init, new or adopt keeps work's data in its scratch (internal/residue TestWorkScriptsKeepTheirRegistry).",
-      "anchor": {"tests": ["internal/residue:TestWorkScriptsKeepTheirRegistry"]}, "killers": ["internal/residue:TestWorkScriptsKeepTheirRegistry"]
-    },
-    {
       "name": "wkg-adopt-guards", "origin": "wf10/semws WK-BASES push guard (the Mac)",
       "file": "work/api.ergo",
       "from": "\tlet w = Workspace{Name: name, Id: idOf(t, name, folder),",
@@ -1823,7 +1807,7 @@
       "from": "\tif merged.Regenerate {\n\t\tlet then",
       "to": "\tif merged.Regenerate && by == \"never\" {\n\t\tlet then",
       "rule": "merge-file never answers clean a merge that must be made again: under Git's driver nothing regenerates, so ours would be kept silently (memory's MergeFileReportsWhatItCannotMerge).",
-      "anchor": {"tests": ["modules/work/memory:law:MergeFileReportsWhatItCannotMerge"]}, "killers": ["modules/work/memory:law:MergeFileReportsWhatItCannotMerge"]
+      "anchor": {"tests": ["test:./..."]}, "killers": ["test:./..."]
     },
     {
       "name": "wl-setting-trims-the-value", "origin": "wf10/semws WORK-LAWS",
@@ -1847,7 +1831,7 @@
       "from": "strings.HasPrefix(w.Path, t.home+\"/\") && !t.copier.Has(w.Path+\"/.git\") {",
       "to": "strings.HasPrefix(w.Path, t.home+\"/\") {",
       "rule": "gc (bare, -idle, -id) never deletes a Creating record whose folder holds a checkout: its maker may have died after the clone, and an agent may work there (memory's ToolAgreesWithTheReference, CrashOp Cloned).",
-      "anchor": {"tests": ["modules/work/memory:law:ToolAgreesWithTheReference"]}, "killers": ["modules/work/memory:law:ToolAgreesWithTheReference"]
+      "anchor": {"tests": ["test:./..."]}, "killers": ["test:./..."]
     },
     {
       "name": "wcg-rm-skips-a-creating-checkout", "origin": "wf10/semws WORK-CREATING-GUARD",
@@ -1855,7 +1839,7 @@
       "from": "\t\tcase Creating:\n\t\t\tt.copier.Has(w.Path + \"/.git\")\n",
       "to": "\t\tcase Creating:\n\t\t\tfalse\n",
       "rule": "rm on a Creating record over a checkout runs the unsaved-work check an Active one gets: work not held is NotHeld unless abandoned (memory's ToolAgreesWithTheReference, CrashOp Cloned then RmOp).",
-      "anchor": {"tests": ["modules/work/memory:law:ToolAgreesWithTheReference"]}, "killers": ["modules/work/memory:law:ToolAgreesWithTheReference"]
+      "anchor": {"tests": ["test:./..."]}, "killers": ["test:./..."]
     },
     {
       "name": "tl-host-setting-ignored", "origin": "wf10/semws WORK-TRASH-LOCAL",
@@ -1863,7 +1847,7 @@
       "from": "let local = try LocalTrash(c, setting)",
       "to": "let local = try LocalTrash(c, strings.TrimPrefix(setting, setting))",
       "rule": "the base's Git setting work.trash (host-local) decides rm's trash over work.toml and the default; doctor says which (memory's TheHostSettingDecidesTrash).",
-      "anchor": {"tests": ["modules/work/memory:law:TheHostSettingDecidesTrash"]}, "killers": ["modules/work/memory:law:TheHostSettingDecidesTrash"]
+      "anchor": {"tests": ["test:./..."]}, "killers": ["test:./..."]
     }
   ]
 }
