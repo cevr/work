@@ -12,6 +12,8 @@ name=${1:?usage: pack.sh NAME [--pack DIR | --publish]}
 mode=${2:-}
 packdir=${3:-}
 [ "$mode" != --pack ] || [ -n "$packdir" ] || { echo "pack.sh: --pack needs a folder" >&2; exit 2; }
+# npm pack --pack-destination needs the folder to exist; npm runs it from each package's folder, so make it absolute.
+[ "$mode" != --pack ] || { mkdir -p "$packdir" && packdir=$(cd "$packdir" && pwd); }
 root=$(cd "$(dirname "$0")/.." && pwd)
 ergo=${ERGO:-ergo}
 npm=$root/npm

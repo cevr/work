@@ -20,5 +20,7 @@ cp -a base .work/base/a
 cp -a base .work/base/b
 printf 'put\t"a"\t".work/base/a"\t"base"\t"main"\t"reflink"\tactive\t900\n' >> .work/base/.registry
 printf 'put\t"b"\t".work/base/b"\t"base"\t"main"\t"reflink"\tactive\t900\n' >> .work/base/.registry
-find .work/base/a .work/base/b -exec touch -h -d @1000 {} +
-touch -d @200000 .work/base/b/a.txt
+# touch -t in UTC, as both GNU and BSD touch read it (BSD has no -d @N):
+# 1970-01-01 00:16:40 is 1000, 1970-01-03 07:33:20 is 200000.
+find .work/base/a .work/base/b -exec env TZ=UTC0 touch -h -t 197001010016.40 {} +
+TZ=UTC0 touch -t 197001030733.20 .work/base/b/a.txt
