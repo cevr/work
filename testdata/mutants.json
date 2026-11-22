@@ -270,7 +270,7 @@
       "file": "classes/classes.ergo",
       "from": "\tcase Derived, Json:\n\t\treturn ByUnits(c, base, ours, theirs)\n",
       "to": "\tcase Json:\n\t\treturn ByUnits(c, base, ours, theirs)\n\tcase Derived:\n",
-      "rule": "A derived file is never merged by lines (the plan: regenerate, never merge): classes' DerivedIsNeverMerged.",
+      "rule": "A derived file is never merged by lines (the plan: regenerate, never merge): classes' DerivedIsNeverMerged, and DerivedLinesAreNeverMerged for two sides that change different lines.",
       "anchor": {"tests": ["test:./..."]}, "killers": ["test:./..."]
     },
     {
@@ -1621,7 +1621,7 @@
       "name": "m0-unmatched-silent", "origin": "wf10/semws M0",
       "file": "work/merge.ergo",
       "from": "\t\tif !slices.Contains(out, l.Pattern) && slices.IndexFunc(files, func(p string) bool { Matches(l.Pattern, p) }) < 0 {\n",
-      "to": "\t\tif false {\n",
+      "to": "\t\tif !slices.Contains(out, l.Pattern) && slices.IndexFunc(files, func(p string) bool { Matches(l.Pattern, p) }) < -1 {\n",
       "rule": "A merge line that takes no file is named (memory's DoctorSeesAnUnregisteredDriver, gone).",
       "anchor": {"tests": ["test:./..."]}
     },
@@ -1685,7 +1685,7 @@
       "name": "m1-marker-unseen", "origin": "wf10/semws M1",
       "file": "work/merge.ergo",
       "from": "\tif strings.HasPrefix(text, \"<<<<<<<\") || strings.Contains(text, \"\\n<<<<<<<\") {\n",
-      "to": "\tif false {\n",
+      "to": "\tif len(text) < 0 {\n",
       "rule": "A driver that ends with status 0 and leaves a conflict marker is withdrawn (law CandidateNeverWorseThanGit).",
       "anchor": {"tests": ["test:./..."]}
     },

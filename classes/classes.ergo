@@ -78,6 +78,23 @@ law DerivedIsNeverMerged(base string, ours string, theirs string) {
 	m.Text == want && m.Regenerate == apart && len(m.Conflicts) == 0
 }
 
+// DerivedLinesAreNeverMerged: DerivedIsNeverMerged on files of lines, where
+// two sides often change different lines, so that Git's line merge of
+// them is clean: a derived file is still taken whole or regenerated,
+// never that merge (free strings almost never draw such a pair).
+law DerivedLinesAreNeverMerged(units Map[int, int], ourEdits []Edit, theirEdits []Edit) {
+	let base = lineSet(applied(units, []Edit{}))
+	let ours = lineSet(applied(applied(units, []Edit{}), ourEdits))
+	let theirs = lineSet(applied(applied(units, []Edit{}), theirEdits))
+	let m = Merge(Derived, base, ours, theirs) catch {
+	case Unreadable:
+		return false
+	}
+	let apart = ours != base && theirs != base && ours != theirs
+	let want = if ours == base { theirs } else { ours }
+	m.Text == want && m.Regenerate == apart && len(m.Conflicts) == 0
+}
+
 // ByUnits is the merge of ours and theirs against base by the unit of c
 // alone.
 func ByUnits(c Class, base string, ours string, theirs string) Merged fails Unreadable {
